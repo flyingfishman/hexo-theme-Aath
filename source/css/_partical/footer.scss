@@ -1,4 +1,5 @@
 footer {
+<<<<<<< HEAD
     .copyright {
         @include basic;
         display: flex;
@@ -11,3 +12,17 @@ footer {
         }
     }
 }
+=======
+  .copyright {
+    @include basic;
+    display: flex;
+    line-height: 3em;
+    color: #BABABA;
+    a {
+      &:hover {
+        color: $hover-color;
+      }
+    }
+  }
+}
+>>>>>>> 170c6432f7956872dcede7792704ea2496782e41
