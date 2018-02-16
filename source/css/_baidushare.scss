@@ -1,0 +1,67 @@
+div.bdsharebuttonbox.bdshare-button-style1-24.right {
+    position: fixed;
+    right: -40px;
+    top: 30%;
+    overflow: visible;
+    width: 40px;
+    br {
+        line-height: 0;
+    }
+    a {
+        display: block;
+        float: none;
+    }
+    a.shareto {
+        background-image: url();
+        float: right;
+        top: 0;
+        position: absolute;
+        right: -30px;
+        width: 20px;
+        border-top-left-radius: 15%;
+        border-bottom-left-radius: 15%;
+        display: inline-block;
+        height: auto;
+        color: white;
+        padding: 5px;
+        background-color: #1ebfd1;
+    }
+}
+
+div.bdsharebuttonbox.bdshare-button-style1-24.right:hover {
+    right: 0;
+}
+
+div.bdsharebuttonbox.bdshare-button-style1-24.left {
+    br {
+        line-height: 0;
+    }
+    position: fixed;
+    left: -40px;
+    top: 30%;
+    overflow: visible;
+    width: 40px;
+    a {
+        display: block;
+        float: none;
+    }
+    a.shareto {
+        background-image: url();
+        top: 0;
+        float: left;
+        position: absolute;
+        right: -30px;
+        width: 20px;
+        border-top-right-radius: 10%;
+        border-bottom-right-radius: 10%;
+        height: auto;
+        display: inline-block;
+        color: white;
+        padding: 5px;
+        background-color: #1ebfd1;
+    }
+}
+
+div.bdsharebuttonbox.bdshare-button-style1-24.left:hover {
+    left: 0;
+}

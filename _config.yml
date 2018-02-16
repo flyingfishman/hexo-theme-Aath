@@ -19,10 +19,3 @@ stylesheets:
 # scripts loaded in the end of the body
 scripts:
 - /js/script.js
-<<<<<<< HEAD
-
-youyan_shortname: youyan
-
-disqus_shortname: dasdsa
-=======
->>>>>>> 170c6432f7956872dcede7792704ea2496782e41

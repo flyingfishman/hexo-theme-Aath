@@ -1,0 +1,19 @@
+<div id="algolia-search-bar">
+    <div id="searcher">
+        <input type="text" id="search-input" placeholder="搜索文章标题、分类、摘要">
+    </div>
+    <img src="<%- url_for('/image/search.png') %>">
+</div>
+<div class="mask">
+    <div id="mask-search-bar">
+        <img src='<%- url_for("/image/search.png") %>'>
+        <input id="mask-search-input" placeholder="搜索文章标题，分类，摘要" id="mask-search-input">
+        <a id="mask-quit" style='background-image:url(<%-url_for("/image/quit.png")%>)'></a>
+        <hr>
+        <ul id="mask-result-list">
+        </ul>
+        <hr>
+        <nav id="page-num">
+        </nav>
+    </div>
+</div>

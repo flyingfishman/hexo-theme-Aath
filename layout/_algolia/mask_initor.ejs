@@ -1,0 +1,135 @@
+class Mask {
+    constructor(apiInfo, value) {
+        this.client = algoliasearch(apiInfo.appID, apiInfo.apiKey);
+        this.index = this.client.initIndex(apiInfo.indexName);
+        this.initor(value);
+    }
+    initor(value) {
+        let self = this;
+        if (value) {
+            document.querySelector("#mask-search-input").value = value;
+            self.search(self);
+        }
+        document.querySelector("#mask-search-input").onkeyup = event => {
+            if (event.keyCode == 8 || event.keyCode >= 65 && event.keyCode <= 90 || event.keyCode == 32)
+                self.search(self);
+        };
+        document.querySelector("#mask-quit").onclick = self.clear;
+    }
+    search(self, num) {
+        num = num === undefined ? 0 : num;
+        let value = this && this.value ? this.value : document.querySelector("#mask-search-input").value;
+        if (!value)
+            return;
+        let queryInfo = {
+            page: num,
+            query: value,
+            hitsPerPage: 8,
+            attributesToRetrieve: ["updated", "date", "tags", "title", "excerpt", "path"]
+        };
+        self.index.search(queryInfo).then(data => {
+            self.trans(data);
+            self.pagenum(data.nbPages, num);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+    pagenum(num, current) {
+        current = current = undefined ? 0 : current;
+        let start = current - 3 < 0 ? 0 : current - 3;
+        let end = current + 3 > num ? num : current + 3;
+        let self = this;
+        if (num <= 1)
+            return;
+        let prePage = document.createElement("a");
+        prePage.id = "pre-page";
+        prePage.onclick = () => {
+            let n = parseInt(document.querySelector("nav .current").text) - 1;
+            if (n === 0) return;
+            self.search(self, n - 1);
+        };
+        let $a;
+        let pageNum = document.querySelector("#page-num");
+        pageNum.innerHTML = "";
+        pageNum.appendChild(prePage);
+        for (var i = start; i < end; i++) {
+            $a = doument.createElement("a");
+            $a.text = i + 1;
+            if (i == current)
+                $a.className = "current";
+            $a.onclick = () => {
+                self.search(self, i);
+            };
+            pageNum.appendChild($a);
+        }
+        if (i + 1 < num) {
+            $a = doument.createElement("a");
+            $a.text = "...";
+
+            pageNum.appendChild($a);
+        }
+
+        let nextPage = document.createElement("a");
+        nextPage.id = "next-page";
+        nextPage.onclick = () => {
+            let n = parseInt(document.querySelector("nav .current").text);
+            if (n === num) return;
+            self.search(self, n);
+        };
+
+        pageNum.appendChild(nextPage);
+    }
+    trans(data) {
+        let self = this;
+        let obj = document.createElement("li");
+        let ulObj = document.querySelector("#mask-result-list");
+        let content = '<a class="link" href=\"<%-url_for("/")%>_link_\" target="_self"></a>\
+        <a>_value_</a>\
+        <a class="date">：_date_</a>\
+        <a class="date">：_updated_</a>';
+        obj.innerHTML = '<a class="result-info">' +
+            (data.nbHits ? ("self.lang.result" + data.nbHits + "s") : "self.lang.noResult") +
+            '</a>';
+        ulObj.innerHTML = "";
+        ulObj.appendChild(obj);
+        data.hits.forEach(ele => {
+            let liObj = document.createElement("li");
+            if (ele._highlightResult.excerpt.matchedWords.length > 0)
+                content = content.replace(/_value_/g, ele._highlightResult.excerpt.value);
+            else
+                content = content.replace(/_value_/g, ele._highlightResult.title.value);
+            liObj.innerHTML = content.replace(/_link_/g, ele.path)
+                .replace(/_date_/g, ele.date)
+                .replace(/_updated_/g, ele.updated);
+            ele.tags.forEach(tag => {
+                let $tag = document.createElement("a");
+                $tag.className = "tags";
+                $tag.innerHTML = tag;
+                $tag.onclick = () => {
+                    document.querySelector("#mask-search-input").value = tag;
+                    self.search(self);
+                };
+                liObj.appendChild($tag);
+            });
+            ulObj.appendChild(liObj);
+        });
+        let icon = document.createElement("li");
+        icon.innerHTML = '<a class="algolia-icon"\
+        link="https://www.algolia.com/" target="_blank"\
+         style=\'display:block; background-image: url(<%- url_for("/image/algolia-mark-blue.png")%>)\'>\
+         searched by algolia</a></li>';
+
+        ulObj.appendChild(icon);
+    }
+    clear(self) {
+        document.querySelector(".mask").style.display = "none";
+        document.querySelector("#mask-search-input").value = "";
+        document.querySelector("#mask-search-input").onkeyup = null;
+        document.querySelector("#mask-result-list").innerHTML = "";
+        document.querySelector("#page-num").innerHTML = "";
+    }
+    faceting(self) {
+
+    }
+}
+var mask;

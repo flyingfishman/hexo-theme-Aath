@@ -1,0 +1,35 @@
+div#exceptional {
+    text-align: center;
+    a.button {
+        background-color: red;
+        border-radius: 10%;
+        color: #ffffff;
+        width: 60px;
+        line-height: 30px;
+        display: inline-block;
+        font-weight: bold;
+    }
+    .button:hover+.pics {
+        display: block;
+    }
+    div.pics {
+        display: none;
+        margin: 0 auto;
+        margin-top: 20px;
+        div {
+            display: inline-block;
+            margin: 0 20px;
+            a[data-fancybox] {
+                display: inline-block;
+                font-size: 0px;
+                img {
+                    width: 200px;
+                }
+            }
+        }
+    }
+}
+
+hr {
+    opacity: 0.1;
+}

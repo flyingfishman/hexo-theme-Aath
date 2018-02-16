@@ -1,0 +1,21 @@
+<hr>
+<div id="exceptional">
+    <span><%- config['exceptional'].content %></span>
+    <br>
+    <a class="button">打赏</a>
+    <div class="pics">
+        <div>
+            <img class="wechat-pic" src="<%- url_for(config['exceptional'].wechat) %>
+            ">
+            <br>
+            <a>微信打赏</a>
+        </div>
+        <div>
+            <img class="alipay-pic" src="<%- url_for(config['exceptional'].alipay) %>
+            ">
+            <br>
+            <a>支付宝打赏</a>
+        </div>
+    </div>
+</div>
+<hr>

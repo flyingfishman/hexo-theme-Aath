@@ -1,0 +1,16 @@
+<div class="site-info">
+    <img src="<%-url_for(config.headimage) %>">
+    <br>
+    <a class="author-name">
+        <%-config.author%>
+    </a>
+    <br>
+    <a class="signature">
+        <%-config.signature%>
+    </a>
+    <br>
+    <a>标签(<%- site.tags.length %>)</a>
+    <a>文章(<%- site.posts.length %>)</a>
+    <br>
+    <a class="rss" style="background-image: url(<%-url_for('/image/rss.png')%>)" href="<%-url_for('/rss.xml')%>">RSS</a>
+</div>

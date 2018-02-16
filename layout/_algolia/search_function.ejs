@@ -1,0 +1,130 @@
+<script src='<%-url_for("/assets/algolia/algoliasearchLite.min.js")%>'>
+</script>
+<script>
+<%- partial("_algolia/mask_initor") %>
+(function() {
+    let indexInfo = {
+        appID: "<%- config.algolia.appID %>",
+        apiKey: "<%- config.algolia.apiKey %>",
+        indexName: "<%- config.algolia.indexName %>"
+    };
+
+    function remove(obj) {
+        obj.parentNode.removeChild(obj);
+    }
+
+    function deleteUl() {
+        var torm = document.querySelector("#result-list");
+        if (torm)
+            remove(torm);
+    }
+    var attr = function(obj, attribute, value) {
+        if (value === undefined) {
+            if (obj[attribute])
+                return obj[attribute];
+            else if (obj.style[attribute])
+                return obj.style[attribute];
+        } else {
+            if (obj[attribute])
+                obj[attribute] = value;
+            else if (obj.style[attribute] || obj.style[attribute] === "")
+                obj.style[attribute] = value;
+            else
+                obj[attribute] = value;
+        }
+    };
+
+    function slide(obj, start, time, distance) {
+        distance = distance || 1;
+        var wide;
+        wide = attr(obj, "width");
+        if (attr(obj, "open")) {
+            if (!wide)
+                wide = 100;
+            else
+                wide = parseFloat(wide);
+            if (wide <= start) {
+                deleteUl();
+                attr(obj, "open", false);
+                return;
+            }
+            wide = wide - (100 - start) / (time / distance);
+        } else {
+            if (!wide)
+                wide = start;
+            else
+                wide = parseFloat(wide);
+            if (wide >= 100) {
+                attr(obj, "open", true);
+                return;
+            }
+            wide = wide + (100 - start) / (time / distance);
+        }
+        wide = parseInt(attr(obj, "width", wide + "%"));
+        setTimeout(function() { slide(obj, start, time) }, distance);
+    }
+    document.querySelector("#algolia-search-bar").querySelector("img")
+        .onclick = function() {
+            slide(document.querySelector("#searcher"), 10, 150);
+        };
+
+    function search(str) {
+        if (!str)
+            return;
+        let client = algoliasearch(indexInfo.appID, indexInfo.apiKey);
+        let index = client.initIndex(indexInfo.indexName);
+        index.search({
+            query: str,
+            attributesToRetrieve: ['title', 'excerpt', 'path'],
+            hitsPerPage: 8
+        }).then(data => {
+            let resultList = document.createElement('ul');
+            resultList.id = "result-list";
+            if (data.nbHits == 0)
+                resultList.innerHTML = "<li><a><%= _('algolia.noResult') %></a></li>";
+            data.hits.forEach((ele, index) => {
+                let listItem = document.createElement("li");
+                let a = '<a target="_self" href="' + '<%- url_for("/") %>' + ele.path + '">' +
+                    ele._highlightResult.title.value + "</a>";
+                listItem.innerHTML = a;
+                resultList.appendChild(listItem);
+            });
+            let node = document.querySelector("#result-list");
+            if (node)
+                remove(node);
+            let algoliaIcon = document.createElement('li');
+            algoliaIcon.innerHTML = '<a target="_blank" class="algolia-icon"\
+            style="background-image:url(<%-url_for("/image/algolia-mark-blue.png")%>)" href="https://www.algolia.com/">\
+            searched by algolia</a>';
+            resultList.appendChild(algoliaIcon);
+            document.querySelector("#algolia-search-bar").appendChild(resultList);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+    document.querySelector("#search-input").onkeyup = function(event) {
+        if (event.keyCode == 13) {
+            document.querySelector(".mask").style.display = "block";
+            deleteUl();
+            if (mask)
+                mask.initor(this.value);
+            else
+                mask = new Mask(indexInfo, this.value)
+            return;
+        } else if (event.keyCode == 8 || event.keyCode >= 65 && event.keyCode <= 90 || event.keyCode == 32)
+            search(this.value);
+    };
+    var barOb = document.querySelector("#algolia-search-bar");
+    barOb.onmouseover = function() {
+        this.inhere = true;
+    };
+    barOb.onmouseout = function() {
+        this.inhere = false;
+    };
+    document.onclick = () => {
+        if (barOb.inhere == true)
+            return;
+        deleteUl();
+    };
+})();
+</script>
