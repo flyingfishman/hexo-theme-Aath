@@ -1,0 +1,19 @@
+<% 
+(function(){
+    if(config.updateSetting){
+
+        var styles=consoleStyles();
+        var algoliaConfig=config.algolia;
+        var client=algoliasearch(algoliaConfig.appID,algoliaConfig.adminApiKey);
+        var index=client.initIndex(algoliaConfig.indexName);
+        index.setSettings(settings(),function(err,content){
+        index.waitTask(content.taskID,function(err){
+          if(err)
+          console.log(styles.red,err);
+          else
+          console.log(styles.green,'update setting success!');});
+        });
+    }
+})();
+
+%>

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <%- partial('_partial/head') %>
-<body>
-  <%- partial('_partial/header') %>
-  <%- body %>
-  <%- partial('_partial/footer') %>
-</body>
+<%- partial('_partial/head') %>
+
+    <body>
+        <div class="wall-paper" style="background-image: url(<%-url_for('/wallpaper/wallpaper0.jpg') %>)"></div>
+        <%- partial('_partial/header') %>
+            <%- body %>
+                <%- partial('_partial/footer') %>
+    </body>
+
 </html>

@@ -1,0 +1,119 @@
+#algolia-search-bar,
+.mask {
+    ul {
+        background-color: #ffffff;
+        list-style: none;
+        text-align: left;
+        padding: 0;
+        position: relative;
+        z-index: 100;
+        li {
+            a {
+                display: block;
+            }
+            a.algolia-icon {
+                text-align: right;
+                background: url("") no-repeat 100%;
+            }
+        }
+        li:hover {
+            background-color: #696969;
+        }
+    }
+    input::-webkit-input-placeholder,
+    input:-moz-placeholder,
+    input::-moz-placeholder,
+    input:-ms-input-placeholder {
+        color: #dadada;
+        font-size: 14px;
+    }
+}
+
+#algolia-search-bar {
+    ul {
+        box-shadow: 1px 1px 5px 0;
+        line-height: 25px;
+        li {
+            a {
+                padding: 5px;
+                padding-left: 15px;
+                font-size: 14px;
+            }
+            a.algolia-icon {
+                padding-right: 30px;
+                background-size: 20px auto;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.mask {
+    ul {
+        margin: 0;
+        line-height: 30px;
+        height: 500px;
+        li {
+            position: relative;
+            a {
+                padding: 10px;
+                font-size: 20px;
+                display: inline-block;
+            }
+            a.tags {
+                position: relative;
+                z-index: 300;
+                color: #ffffff;
+                background-color: #b0afaf;
+                border-radius: 15%;
+                font-size: 10px;
+                line-height: 15px;
+                padding: 1px;
+                text-align: center;
+                margin-right: 5px;
+            }
+            a.algolia-icon {
+                padding-right: 40px;
+                background-size: 30px auto;
+                margin-right: 10px;
+            }
+            a.link {
+                width: 100%;
+                position: absolute;
+                padding: 0;
+                height: 50px;
+                z-index: 200;
+            }
+            a.date {
+                float: right;
+                font-size: 14px;
+            }
+        }
+    }
+    nav {
+        display: inline-block;
+        margin: 0 auto;
+        line-height: 30px;
+        margin-top: 10px;
+        .current {
+            background-color: #696969;
+            color: #ffffff;
+        }
+        a {
+            width: 30px;
+            margin-right: 5px;
+            background-color: #b0afaf;
+            display: inline-block;
+            color: #ffffff;
+        }
+        a#pre-page,
+        a#next-page {
+            width: 40px;
+            background-color: #696969;
+            color: #ffffff;
+        }
+    }
+}
+
+@import 'css/_algolia/mask.scss';
+@import 'css/_algolia/search_bar.scss';

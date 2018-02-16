@@ -5,7 +5,7 @@
   <meta name="description" content="<%= config.description %>">
   <meta name="keywords" content="<%= config.keywords %>">
   <% if (theme.favicon){ %>
-    <link rel="icon" href="<%- config.favicon %>">
+    <link rel="icon" href="<%- url_for(config.favicon) %>">
   <% } %>
   <%
     var title = page.title;
@@ -15,9 +15,33 @@
     if (is_category()){
       title = page.category
     }
-  %>  
+  %>
+  <% if(config.wallpaper){%>
+  <%- css("css/wallpaper.css") %>
+  <%}%>
+  <% if(is_post()){%>
+  <% if(config.feed.rss){%>
+  <%- css("css/rss/rss.css") %>
+  <%}%>
+  <% if(config.share){%>
+  <%- css("share.css") %>
+  <%}%>
+  <% if(config.hide){%>
+  <%- css("css/hide.css")%>
+  <%}%>
+  <% if(config.exceptional){%>
+  <%- css("css/exceptional/exceptional")%>
+  <%}%>
+  <% if(config.algolia){%>
+  <%- css("algolia_search_style.css") %>
+  <%}%>
+  <%}%>
   <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
   <%- css('style') %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
+  <% if(config.algolia.instantSearch){ %>
+      <link href="https://cdn.bootcss.com/instantsearch.js/2.4.1/instantsearch-theme-algolia.css" rel="stylesheet">
+      <link href="https://cdn.bootcss.com/instantsearch.js/2.4.1/instantsearch-theme-algolia.min.css" rel="stylesheet">
+  <% } %>
 </head>

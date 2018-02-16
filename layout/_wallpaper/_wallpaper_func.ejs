@@ -1,0 +1,43 @@
+<% if(config.wallpaper.change){%>
+    <script>
+    (function() {
+        function loadXMLDoc() {
+            var xmlhttp = null;
+            if (window.XMLHttpRequest) { // code for all new browsers
+                xmlhttp = new XMLHttpRequest();
+            } else if (window.ActiveXObject) { // code for IE5 and IE6
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            return xmlhttp;
+        }
+        var wallpaperInfo;
+        let close = false;
+        var xmlhttp = loadXMLDoc();
+        xmlhttp.open("get", "<%- url_for(config.wallpaper.infoPath)%>", false);
+        xmlhttp.send();
+        var wallpaperInfo = JSON.parse(xmlhttp.responseText);
+        var wallpaper_th = 0;
+        let changeWallpaper = () => {
+            if (close) return;
+            var wallpaper = document.querySelector(".wall-paper");
+            var n = wallpaper_th;
+            wallpaper.style.backgroundImage = "url(<%-url_for(config.wallpaper.path)%>" + wallpaperInfo.path[n] + ")";
+            wallpaper_th++;
+            if (wallpaper_th >= wallpaperInfo.path.length)
+                wallpaper_th = 0;
+            /*var url = wallpaper.style.backgroundImage;
+            var arr = url.match(/(\d+)\.(jpg|png)\)$/);
+            var num = parseInt(arr[1]);
+            num += 1;
+            if (num >= wallpaperInfo.end) {
+                num = wallpaperInfo.start;
+            }
+            wallpaper.style.backgroundImage =
+                wallpaper.style.backgroundImage.split(arr[0])[0] + arr[1] + "." + arr[2] + ")";*/
+            setTimeout(changeWallpaper, <%=config.wallpaper.change_time%>);
+        };
+        changeWallpaper();
+
+    })();
+    </script>
+    <%}%>
