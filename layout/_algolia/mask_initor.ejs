@@ -11,7 +11,7 @@ class Mask {
             self.search(self);
         }
         document.querySelector("#mask-search-input").onkeyup = event => {
-            if (event.keyCode == 8 || event.keyCode >= 65 && event.keyCode <= 90 || event.keyCode == 32)
+            if (event.keyCode == 8 || event.keyCode >= 48 && event.keyCode <= 90 || event.keyCode == 32)
                 self.search(self);
         };
         document.querySelector("#mask-quit").onclick = self.clear;

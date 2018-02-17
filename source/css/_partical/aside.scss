@@ -1,5 +1,11 @@
 aside>div {
-    margin-left: 5px;
-    margin-top: 10px;
+    margin-left: 15px;
+    margin-top: 15px;
     background-color: #ffffff;
+}
+
+aside {
+    div:first-child {
+        margin-top: 0;
+    }
 }

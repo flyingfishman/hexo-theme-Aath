@@ -111,7 +111,7 @@
             else
                 mask = new Mask(indexInfo, this.value)
             return;
-        } else if (event.keyCode == 8 || event.keyCode >= 65 && event.keyCode <= 90 || event.keyCode == 32)
+        } else if (event.keyCode == 8 || event.keyCode >= 48 && event.keyCode <= 90 || event.keyCode == 32)
             search(this.value);
     };
     var barOb = document.querySelector("#algolia-search-bar");
